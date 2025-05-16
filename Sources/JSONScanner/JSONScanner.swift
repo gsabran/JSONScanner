@@ -14,54 +14,55 @@
 
 import Foundation
 
-private let asciiBell = UInt8(7)
-private let asciiBackspace = UInt8(8)
-private let asciiTab = UInt8(9)
-private let asciiNewLine = UInt8(10)
-private let asciiVerticalTab = UInt8(11)
-private let asciiFormFeed = UInt8(12)
-private let asciiCarriageReturn = UInt8(13)
-private let asciiZero = UInt8(ascii: "0")
-private let asciiOne = UInt8(ascii: "1")
-private let asciiSeven = UInt8(ascii: "7")
-private let asciiNine = UInt8(ascii: "9")
-private let asciiColon = UInt8(ascii: ":")
-private let asciiPeriod = UInt8(ascii: ".")
-private let asciiPlus = UInt8(ascii: "+")
-private let asciiComma = UInt8(ascii: ",")
-private let asciiSemicolon = UInt8(ascii: ";")
-private let asciiDoubleQuote = UInt8(ascii: "\"")
-private let asciiSingleQuote = UInt8(ascii: "\'")
-private let asciiBackslash = UInt8(ascii: "\\")
-private let asciiForwardSlash = UInt8(ascii: "/")
-private let asciiHash = UInt8(ascii: "#")
-private let asciiEqualSign = UInt8(ascii: "=")
-private let asciiUnderscore = UInt8(ascii: "_")
-private let asciiQuestionMark = UInt8(ascii: "?")
-private let asciiSpace = UInt8(ascii: " ")
-private let asciiOpenSquareBracket = UInt8(ascii: "[")
-private let asciiCloseSquareBracket = UInt8(ascii: "]")
-private let asciiOpenCurlyBracket = UInt8(ascii: "{")
-private let asciiCloseCurlyBracket = UInt8(ascii: "}")
-private let asciiOpenAngleBracket = UInt8(ascii: "<")
-private let asciiCloseAngleBracket = UInt8(ascii: ">")
-private let asciiMinus = UInt8(ascii: "-")
-private let asciiLowerA = UInt8(ascii: "a")
-private let asciiUpperA = UInt8(ascii: "A")
-private let asciiLowerB = UInt8(ascii: "b")
-private let asciiLowerE = UInt8(ascii: "e")
-private let asciiUpperE = UInt8(ascii: "E")
-private let asciiLowerF = UInt8(ascii: "f")
-private let asciiUpperI = UInt8(ascii: "I")
-private let asciiLowerL = UInt8(ascii: "l")
-private let asciiLowerN = UInt8(ascii: "n")
-private let asciiUpperN = UInt8(ascii: "N")
-private let asciiLowerR = UInt8(ascii: "r")
-private let asciiLowerS = UInt8(ascii: "s")
-private let asciiLowerT = UInt8(ascii: "t")
-private let asciiLowerU = UInt8(ascii: "u")
-private let asciiLowerZ = UInt8(ascii: "z")
-private let asciiUpperZ = UInt8(ascii: "Z")
+
+public let asciiBell = UInt8(7)
+public let asciiBackspace = UInt8(8)
+public let asciiTab = UInt8(9)
+public let asciiNewLine = UInt8(10)
+public let asciiVerticalTab = UInt8(11)
+public let asciiFormFeed = UInt8(12)
+public let asciiCarriageReturn = UInt8(13)
+public let asciiZero = UInt8(ascii: "0")
+public let asciiOne = UInt8(ascii: "1")
+public let asciiSeven = UInt8(ascii: "7")
+public let asciiNine = UInt8(ascii: "9")
+public let asciiColon = UInt8(ascii: ":")
+public let asciiPeriod = UInt8(ascii: ".")
+public let asciiPlus = UInt8(ascii: "+")
+public let asciiComma = UInt8(ascii: ",")
+public let asciiSemicolon = UInt8(ascii: ";")
+public let asciiDoubleQuote = UInt8(ascii: "\"")
+public let asciiSingleQuote = UInt8(ascii: "\'")
+public let asciiBackslash = UInt8(ascii: "\\")
+public let asciiForwardSlash = UInt8(ascii: "/")
+public let asciiHash = UInt8(ascii: "#")
+public let asciiEqualSign = UInt8(ascii: "=")
+public let asciiUnderscore = UInt8(ascii: "_")
+public let asciiQuestionMark = UInt8(ascii: "?")
+public let asciiSpace = UInt8(ascii: " ")
+public let asciiOpenSquareBracket = UInt8(ascii: "[")
+public let asciiCloseSquareBracket = UInt8(ascii: "]")
+public let asciiOpenCurlyBracket = UInt8(ascii: "{")
+public let asciiCloseCurlyBracket = UInt8(ascii: "}")
+public let asciiOpenAngleBracket = UInt8(ascii: "<")
+public let asciiCloseAngleBracket = UInt8(ascii: ">")
+public let asciiMinus = UInt8(ascii: "-")
+public let asciiLowerA = UInt8(ascii: "a")
+public let asciiUpperA = UInt8(ascii: "A")
+public let asciiLowerB = UInt8(ascii: "b")
+public let asciiLowerE = UInt8(ascii: "e")
+public let asciiUpperE = UInt8(ascii: "E")
+public let asciiLowerF = UInt8(ascii: "f")
+public let asciiUpperI = UInt8(ascii: "I")
+public let asciiLowerL = UInt8(ascii: "l")
+public let asciiLowerN = UInt8(ascii: "n")
+public let asciiUpperN = UInt8(ascii: "N")
+public let asciiLowerR = UInt8(ascii: "r")
+public let asciiLowerS = UInt8(ascii: "s")
+public let asciiLowerT = UInt8(ascii: "t")
+public let asciiLowerU = UInt8(ascii: "u")
+public let asciiLowerZ = UInt8(ascii: "z")
+public let asciiUpperZ = UInt8(ascii: "Z")
 
 private func fromHexDigit(_ c: UnicodeScalar) -> UInt32? {
     let n = c.value
@@ -372,12 +373,11 @@ private func decodeString(_ s: String) -> String? {
 /// The basic scanner support is entirely private
 ///
 /// For performance, it works directly against UTF-8 bytes in memory.
-internal struct JSONScanner {
+public struct JSONScanner {
     private let source: UnsafeRawBufferPointer
-    private var index: UnsafeRawBufferPointer.Index
+    public var index: UnsafeRawBufferPointer.Index // TODO: is public necessary?
     private var numberParser = DoubleParser()
     internal let options: JSONDecodingOptions
-    internal let extensions: any ExtensionMap
     internal var recursionBudget: Int
 
     /// True if the scanner has read all of the data from the source, with the
@@ -391,25 +391,23 @@ internal struct JSONScanner {
     }
 
     /// True if the scanner has not yet reached the end of the source.
-    private var hasMoreContent: Bool {
+    public var hasMoreContent: Bool {
         index != source.endIndex
     }
 
     /// The byte (UTF-8 code unit) at the scanner's current position.
-    private var currentByte: UInt8 {
+    public var currentByte: UInt8 {
         source[index]
     }
 
-    internal init(
+    public  init(
         source: UnsafeRawBufferPointer,
-        options: JSONDecodingOptions,
-        extensions: (any ExtensionMap)?
+        options: JSONDecodingOptions
     ) {
         self.source = source
         self.index = source.startIndex
         self.recursionBudget = options.messageDepthLimit
         self.options = options
-        self.extensions = extensions ?? SimpleExtensionMap()
     }
 
     internal mutating func incrementRecursionDepth() throws {
@@ -429,12 +427,12 @@ internal struct JSONScanner {
     }
 
     /// Advances the scanner to the next position in the source.
-    private mutating func advance() {
+    public mutating func advance() {
         source.formIndex(after: &index)
     }
 
     /// Skip whitespace.
-    private mutating func skipWhitespace() {
+    public mutating func skipWhitespace() {
         while hasMoreContent {
             let u = currentByte
             switch u {
@@ -449,7 +447,7 @@ internal struct JSONScanner {
     /// Returns (but does not consume) the next non-whitespace
     /// character.  This is used by google.protobuf.Value, for
     /// example, for custom JSON parsing.
-    internal mutating func peekOneCharacter() throws -> Character {
+    public mutating func peekOneCharacter() throws -> Character {
         skipWhitespace()
         guard hasMoreContent else {
             throw JSONDecodingError.truncated
@@ -826,7 +824,7 @@ internal struct JSONScanner {
     /// This supports the full range of UInt64 (whether quoted or not)
     /// unless the number is written in floating-point format.  In that
     /// case, we decode it with only Double precision.
-    internal mutating func nextUInt() throws -> UInt64 {
+    public mutating func nextUInt() throws -> UInt64 {
         skipWhitespace()
         guard hasMoreContent else {
             throw JSONDecodingError.truncated
@@ -892,7 +890,7 @@ internal struct JSONScanner {
     /// This supports the full range of Int64 (whether quoted or not)
     /// unless the number is written in floating-point format.  In that
     /// case, we decode it with only Double precision.
-    internal mutating func nextSInt() throws -> Int64 {
+    public mutating func nextSInt() throws -> Int64 {
         skipWhitespace()
         guard hasMoreContent else {
             throw JSONDecodingError.truncated
@@ -955,7 +953,7 @@ internal struct JSONScanner {
     /// Parse the next Float value, regardless of whether it
     /// is quoted, including handling backslash escapes for
     /// quoted strings.
-    internal mutating func nextFloat() throws -> Float {
+    public mutating func nextFloat() throws -> Float {
         skipWhitespace()
         guard hasMoreContent else {
             throw JSONDecodingError.truncated
@@ -1033,7 +1031,7 @@ internal struct JSONScanner {
     /// Parse the next Double value, regardless of whether it
     /// is quoted, including handling backslash escapes for
     /// quoted strings.
-    internal mutating func nextDouble() throws -> Double {
+    public mutating func nextDouble() throws -> Double {
         skipWhitespace()
         guard hasMoreContent else {
             throw JSONDecodingError.truncated
@@ -1106,7 +1104,7 @@ internal struct JSONScanner {
 
     /// Return the contents of the following quoted string,
     /// or throw an error if the next token is not a string.
-    internal mutating func nextQuotedString() throws -> String {
+    public mutating func nextQuotedString() throws -> String {
         skipWhitespace()
         guard hasMoreContent else {
             throw JSONDecodingError.truncated
@@ -1126,7 +1124,7 @@ internal struct JSONScanner {
     /// or nil if the next token is not a string.
     /// This will only throw an error if the next token starts
     /// out as a string but is malformed in some way.
-    internal mutating func nextOptionalQuotedString() throws -> String? {
+    public mutating func nextOptionalQuotedString() throws -> String? {
         skipWhitespace()
         guard hasMoreContent else {
             return nil
@@ -1149,7 +1147,7 @@ internal struct JSONScanner {
     ///  * Google's C++ implementation accepts both "regular" and
     ///    "web-safe" base-64 variants (it seems to prefer the
     ///    web-safe version as defined in RFC 4648
-    internal mutating func nextBytesValue() throws -> Data {
+    public mutating func nextBytesValue() throws -> Data {
         skipWhitespace()
         guard hasMoreContent else {
             throw JSONDecodingError.truncated
@@ -1158,7 +1156,7 @@ internal struct JSONScanner {
     }
 
     /// Private function to help parse keywords.
-    private mutating func skipOptionalKeyword(bytes: [UInt8]) -> Bool {
+    public mutating func skipOptionalKeyword(bytes: [UInt8]) -> Bool {
         let start = index
         for b in bytes {
             guard hasMoreContent else {
@@ -1183,7 +1181,7 @@ internal struct JSONScanner {
     }
 
     /// If the next token is the identifier "null", consume it and return true.
-    internal mutating func skipOptionalNull() -> Bool {
+    public mutating func skipOptionalNull() -> Bool {
         skipWhitespace()
         if hasMoreContent && currentByte == asciiLowerN {
             return skipOptionalKeyword(bytes: [
@@ -1196,7 +1194,7 @@ internal struct JSONScanner {
     /// Return the following Bool "true" or "false", including
     /// full processing of quoted boolean values.  (Used in map
     /// keys, for instance.)
-    internal mutating func nextBool() throws -> Bool {
+    public mutating func nextBool() throws -> Bool {
         skipWhitespace()
         guard hasMoreContent else {
             throw JSONDecodingError.truncated
@@ -1224,7 +1222,7 @@ internal struct JSONScanner {
     /// Return the following Bool "true" or "false", including
     /// full processing of quoted boolean values.  (Used in map
     /// keys, for instance.)
-    internal mutating func nextQuotedBool() throws -> Bool {
+    public mutating func nextQuotedBool() throws -> Bool {
         skipWhitespace()
         guard hasMoreContent else {
             throw JSONDecodingError.truncated
@@ -1274,103 +1272,6 @@ internal struct JSONScanner {
         return buff
     }
 
-    /// Parse a field name, look it up in the provided field name map,
-    /// and return the corresponding field number.
-    ///
-    /// Throws if field name cannot be parsed.
-    /// If it encounters an unknown field name, it throws
-    /// unless `options.ignoreUnknownFields` is set, in which case
-    /// it silently skips it.
-    internal mutating func nextFieldNumber(
-        names: _NameMap,
-        messageType: any Message.Type
-    ) throws -> Int? {
-        while true {
-            var fieldName: String
-            if let key = try nextOptionalKey() {
-                // Fast path:  We parsed it as UTF8 bytes...
-                try skipRequiredCharacter(asciiColon)  // :
-                if let fieldNumber = names.number(forJSONName: key) {
-                    return fieldNumber
-                }
-                if let s = utf8ToString(bytes: key.baseAddress!, count: key.count) {
-                    fieldName = s
-                } else {
-                    throw JSONDecodingError.invalidUTF8
-                }
-            } else {
-                // Slow path:  We parsed a String; lookups from String are slower.
-                fieldName = try nextQuotedString()
-                try skipRequiredCharacter(asciiColon)  // :
-                if let fieldNumber = names.number(forJSONName: fieldName) {
-                    return fieldNumber
-                }
-            }
-            if let first = fieldName.utf8.first, first == UInt8(ascii: "["),
-                let last = fieldName.utf8.last, last == UInt8(ascii: "]")
-            {
-                fieldName.removeFirst()
-                fieldName.removeLast()
-                if let fieldNumber = extensions.fieldNumberForProto(messageType: messageType, protoFieldName: fieldName)
-                {
-                    return fieldNumber
-                }
-            }
-            if !options.ignoreUnknownFields {
-                throw JSONDecodingError.unknownField(fieldName)
-            }
-            // Unknown field, skip it and try to parse the next field name
-            try skipValue()
-            if skipOptionalObjectEnd() {
-                return nil
-            }
-            try skipRequiredComma()
-        }
-    }
-
-    /// Parse the next token as a string or numeric enum value.  Throws
-    /// unrecognizedEnumValue if the string/number can't initialize the
-    /// enum.  Will throw other errors if the JSON is malformed.
-    internal mutating func nextEnumValue<E: Enum>() throws -> E? {
-        func throwOrIgnore() throws -> E? {
-            if options.ignoreUnknownFields {
-                return nil
-            } else {
-                throw JSONDecodingError.unrecognizedEnumValue
-            }
-        }
-        skipWhitespace()
-        guard hasMoreContent else {
-            throw JSONDecodingError.truncated
-        }
-        if currentByte == asciiDoubleQuote {
-            if let name = try nextOptionalKey() {
-                if let e = E(rawUTF8: name) {
-                    return e
-                } else {
-                    return try throwOrIgnore()
-                }
-            }
-            let name = try nextQuotedString()
-            if let e = E(name: name) {
-                return e
-            } else {
-                return try throwOrIgnore()
-            }
-        } else {
-            let n = try nextSInt()
-            if let i = Int(exactly: n) {
-                if let e = E(rawValue: i) {
-                    return e
-                } else {
-                    return try throwOrIgnore()
-                }
-            } else {
-                throw JSONDecodingError.numberRange
-            }
-        }
-    }
-
     /// Helper for skipping a single-character token.
     private mutating func skipRequiredCharacter(_ required: UInt8) throws {
         skipWhitespace()
@@ -1384,26 +1285,37 @@ internal struct JSONScanner {
         }
         throw JSONDecodingError.failure
     }
-
+    
     /// Skip "{", throw if that's not the next character.
-    internal mutating func skipRequiredObjectStart() throws {
+    public mutating func skipRequiredObjectStart() throws {
         try skipRequiredCharacter(asciiOpenCurlyBracket)  // {
         try incrementRecursionDepth()
     }
+    
+    /// Skip "}", throw if that's not the next character.
+    public mutating func skipRequiredObjectEnd() throws {
+        try skipRequiredCharacter(asciiCloseCurlyBracket)  // }
+        decrementRecursionDepth()
+    }
 
     /// Skip ",", throw if that's not the next character.
-    internal mutating func skipRequiredComma() throws {
+    public mutating func skipRequiredComma() throws {
         try skipRequiredCharacter(asciiComma)
     }
 
     /// Skip ":", throw if that's not the next character.
-    internal mutating func skipRequiredColon() throws {
+    public mutating func skipRequiredColon() throws {
         try skipRequiredCharacter(asciiColon)
     }
-
+    
     /// Skip "[", throw if that's not the next character.
-    internal mutating func skipRequiredArrayStart() throws {
+    public mutating func skipRequiredArrayStart() throws {
         try skipRequiredCharacter(asciiOpenSquareBracket)  // [
+    }
+    
+    /// Skip "]", throw if that's not the next character.
+    public mutating func skipRequiredArrayEnd() throws {
+        try skipRequiredCharacter(asciiCloseSquareBracket)  // ]
     }
 
     /// Helper for skipping optional single-character tokens.
@@ -1418,19 +1330,19 @@ internal struct JSONScanner {
 
     /// If the next non-whitespace character is "[", skip it
     /// and return true.  Otherwise, return false.
-    internal mutating func skipOptionalArrayStart() -> Bool {
+    public mutating func skipOptionalArrayStart() -> Bool {
         skipOptionalCharacter(asciiOpenSquareBracket)
     }
 
     /// If the next non-whitespace character is "]", skip it
     /// and return true.  Otherwise, return false.
-    internal mutating func skipOptionalArrayEnd() -> Bool {
+    public mutating func skipOptionalArrayEnd() -> Bool {
         skipOptionalCharacter(asciiCloseSquareBracket)  // ]// ]
     }
 
     /// If the next non-whitespace character is "}", skip it
     /// and return true.  Otherwise, return false.
-    internal mutating func skipOptionalObjectEnd() -> Bool {
+    public mutating func skipOptionalObjectEnd() -> Bool {
         let result = skipOptionalCharacter(asciiCloseCurlyBracket)  // }
         if result {
             decrementRecursionDepth()
@@ -1444,7 +1356,7 @@ internal struct JSONScanner {
     ///
     /// Used by Any to get the upcoming JSON value as a string.
     /// Note: The value might be an object or array.
-    internal mutating func skip() throws -> String {
+    public mutating func skip() throws -> String {
         skipWhitespace()
         let start = index
         try skipValue()
@@ -1460,7 +1372,7 @@ internal struct JSONScanner {
     /// Note: This handles objects {...} recursively but arrays [...] non-recursively
     /// This avoids us requiring excessive stack space for deeply nested
     /// arrays (which are not included in the recursion budget check).
-    private mutating func skipValue() throws {
+    public mutating func skipValue() throws {
         skipWhitespace()
         var totalArrayDepth = 0
         while true {
@@ -1518,7 +1430,7 @@ internal struct JSONScanner {
     }
 
     /// Advance the index past the next complete {...} construct.
-    private mutating func skipObject() throws {
+    public mutating func skipObject() throws {
         try skipRequiredObjectStart()
         if skipOptionalObjectEnd() {
             return
@@ -1546,7 +1458,7 @@ internal struct JSONScanner {
     // Old clients that don't know new field types will skip fields
     // they don't know; newer clients may reject the same input due to
     // schema mismatches or other issues.
-    private mutating func skipString() throws {
+    public mutating func skipString() throws {
         guard hasMoreContent else {
             throw JSONDecodingError.truncated
         }
